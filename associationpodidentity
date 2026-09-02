@@ -1,0 +1,51 @@
+(base) rodolphe@rodolphe:~$ aws eks list-pod-identity-associations \
+  --cluster-name video-streaming-cluster \
+  --region us-east-1
+{
+    "associations": [
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "karpenter",
+            "serviceAccount": "karpenter",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-8495rpm1v4gmkdbbu",
+            "associationId": "a-8495rpm1v4gmkdbbu"
+        },
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "external-secrets",
+            "serviceAccount": "external-secrets",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-ig1zbk5oqai5rwmbl",
+            "associationId": "a-ig1zbk5oqai5rwmbl"
+        },
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "kube-system",
+            "serviceAccount": "aws-load-balancer-controller",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-jc3at5xf2zi2tltay",
+            "associationId": "a-jc3at5xf2zi2tltay"
+        },
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "app",
+            "serviceAccount": "register-ms-sa",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-k4jf4j9xpc7yhsim3",
+            "associationId": "a-k4jf4j9xpc7yhsim3"
+        },
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "app",
+            "serviceAccount": "upload-service-sa",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-kkpfqyixeeui2mq81",
+            "associationId": "a-kkpfqyixeeui2mq81"
+        },
+        {
+            "clusterName": "video-streaming-cluster",
+            "namespace": "app",
+            "serviceAccount": "transcoder-sa",
+            "associationArn": "arn:aws:eks:us-east-1:868480224885:podidentityassociation/video-streaming-cluster/a-ppdzashciygj64ydz",
+            "associationId": "a-ppdzashciygj64ydz"
+        }
+    ]
+}
+(base) rodolphe@rodolphe:~$ 
+

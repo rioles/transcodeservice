@@ -15,24 +15,42 @@ public class SqsConsumer {
 
     /**
      * Consumes transcode job messages from the SQS queue and delegates
-     * processing to {@link TranscodeOrchestrator}.
-     * <p>
-     * Visibility heartbeat is not yet implemented. For long-running jobs,
-     * a scheduled task extending message visibility via {@code SqsAsyncClient}
-     * should be added to avoid premature redelivery.
-     * <p>
-     * Any exception thrown here prevents Spring Cloud AWS from deleting the
-     * message, so the job will be retried after the visibility timeout expires.
+     * processing to TranscodeOrchestrator.
+     *
+     * Spring Cloud AWS resolves the queue by its name.
+     * AWS SDK credentials are provided automatically through
+     * EKS Pod Identity.
+     *
+     * Any exception prevents successful message acknowledgement,
+     * allowing SQS to make the message visible again after the
+     * visibility timeout.
      */
-    @SqsListener(value = "${transcode.queue.url}")
+    @SqsListener("${transcode.queue.name}")
     public void listen(TranscodeJobMessage message) {
-        log.info("Received transcode job for video: {}", message.getVideoId());
+
+        log.info(
+            "Received transcode job for video: {}",
+            message.getVideoId()
+        );
+
         try {
             transcodeOrchestrator.processJob(message);
-            log.info("Successfully processed job: {}", message.getVideoId());
+
+            log.info(
+                "Successfully processed job: {}",
+                message.getVideoId()
+            );
+
         } catch (Exception e) {
-            log.error("Error processing job: {}", message.getVideoId(), e);
+
+            log.error(
+                "Error processing job: {}",
+                message.getVideoId(),
+                e
+            );
+
             throw e;
         }
     }
 }
+
