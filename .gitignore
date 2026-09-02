@@ -7,3 +7,5 @@ target/
 .vscode/
 /tmp/
 *.log
+.env
+.env
