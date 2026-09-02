@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: stream-transcoder-service
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:db-registration}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    # Configuration HikariCP (Connection Pooling)
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:20}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      idle-timeout: 300000 # 5 minutes
+      max-lifetime: 1800000 # 30 minutes
+      connection-timeout: 20000 # 20 secondes
+  jpa:
+    hibernate:
+      ddl-auto: update # Utilisez 'update' si vous voulez que Hibernate crée/mette à jour la table automatiquement
+    show-sql: false
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-east-1}
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID}
+        secret-key: ${AWS_SECRET_ACCESS_KEY}
+      sqs:
+        queue-name: ${TRANSCODE_QUEUE_NAME:video-streaming-cluster-transcode-queue}
+        listener:
+          max-messages-per-poll: 1
+
+aws:
+  s3:
+    bucket: ${AWS_S3_BUCKET:states3bucket-deploy}
+
+transcode:
+  queue:
+    url: ${TRANSCODE_QUEUE_URL:https://sqs.us-east-1.amazonaws.com/868480224885/video-streaming-cluster-transcode-queue}
+  hls:
+    segment-duration-seconds: ${HLS_SEGMENT_DURATION:6}
+  temp-dir: ${TRANSCODE_TEMP_DIR:/tmp/transcode}
+
+logging:
+  level:
+    com.stream.transcoder: DEBUG
+    io.awspring.cloud.sqs: DEBUG
+    software.amazon.awssdk.services.sqs: DEBUG
+    org.springframework.cloud.aws: INFO
