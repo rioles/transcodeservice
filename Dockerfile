@@ -1,4 +1,4 @@
-```dockerfile
+
 # =========================================================
 # STAGE 1: Build JAR
 # =========================================================
@@ -49,5 +49,5 @@ EXPOSE 8080
 
 # Démarrage du service
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.io.tmpdir=/tmp/transcoder-workspace -jar app.jar"]
-```
+
 
