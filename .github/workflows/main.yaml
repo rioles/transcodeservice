@@ -11,7 +11,7 @@ jobs:
     environment: production
 
     steps:
-      # 1. Checkout du code
+      # 1. Checkout du codes
       - name: Checkout code
         uses: actions/checkout@v4
 
